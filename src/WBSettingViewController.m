@@ -54,15 +54,9 @@
     
     [self addBasicSettingSection];
     [self addSupportSection];
-    
-    CContactMgr *contactMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("CContactMgr")];
-    
-    if ([contactMgr isInContactList:@"gh_6e8bddcdfca3"]) {
-        [self addAdvanceSettingSection];
-    } else {
-        [self addAdvanceLimitSection];
-    }
-    
+
+    [self addAdvanceSettingSection];
+
     [self addAboutSection];
     
     MMTableView *tableView = [self.tableViewInfo getTableView];
@@ -188,40 +182,6 @@
 
 - (void)settingMessageRevoke:(UISwitch *)revokeSwitch {
     [WBRedEnvelopConfig sharedConfig].revokeEnable = revokeSwitch.on;
-}
-
-#pragma mark - ProLimit
-
-- (void)addAdvanceLimitSection {
-    MMTableViewSectionInfo *sectionInfo = [objc_getClass("MMTableViewSectionInfo") sectionInfoHeader:@"高级功能" Footer:@"关注公众号后开启高级功能"];
-    
-    [sectionInfo addCell:[self createReceiveSelfRedEnvelopLimitCell]];
-    [sectionInfo addCell:[self createQueueLimitCell]];
-    [sectionInfo addCell:[self createBlackListLimitCell]];
-    [sectionInfo addCell:[self createAbortRemokeMessageLimitCell]];
-    [sectionInfo addCell:[self createKeywordFilterLimitCell]];
-    
-    [self.tableViewInfo addSection:sectionInfo];
-}
-
-- (MMTableViewCellInfo *)createReceiveSelfRedEnvelopLimitCell {
-    return [objc_getClass("MMTableViewCellInfo") normalCellForTitle:@"抢自己发的红包" rightValue:@"未启用"];
-}
-
-- (MMTableViewCellInfo *)createQueueLimitCell {
-    return [objc_getClass("MMTableViewCellInfo") normalCellForTitle:@"防止同时抢多个红包" rightValue:@"未启用"];
-}
-
-- (MMTableViewCellInfo *)createBlackListLimitCell {
-    return [objc_getClass("MMTableViewCellInfo") normalCellForTitle:@"群聊过滤" rightValue:@"未启用"];
-}
-
-- (MMTableViewSectionInfo *)createKeywordFilterLimitCell {
-    return [objc_getClass("MMTableViewCellInfo") normalCellForTitle:@"关键词过滤" rightValue:@"未启用"];
-}
-
-- (MMTableViewSectionInfo *)createAbortRemokeMessageLimitCell {
-    return [objc_getClass("MMTableViewCellInfo") normalCellForTitle:@"消息防撤回" rightValue:@"未启用"];
 }
 
 #pragma mark - About
